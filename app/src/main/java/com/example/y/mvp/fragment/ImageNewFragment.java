@@ -1,7 +1,6 @@
 package com.example.y.mvp.fragment;
 
 
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -44,11 +43,6 @@ public class ImageNewFragment extends BaseFragment implements
     private Presenter.ImageNewPresenter imageNewPresenter;
 
     @Override
-    public View initView(Bundle savedInstanceState) {
-        return View.inflate(UIUtils.getActivity(), R.layout.fragment_new_image, null);
-    }
-
-    @Override
     protected void initById() {
         etId = getView(R.id.et_id);
         etRows = getView(R.id.et_rows);
@@ -74,6 +68,11 @@ public class ImageNewFragment extends BaseFragment implements
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
 
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_new_image;
     }
 
 

@@ -29,7 +29,7 @@ public class NewsListAdapter extends BaseRecyclerViewAdapter<NewsListInfo> {
     }
 
     @Override
-    protected void onBind(ViewHolder holder, int position, NewsListInfo data) {
+    protected void onBind(BaseViewHolder holder, int position, NewsListInfo data) {
         holder.setTextView(R.id.tv_time, UIUtils.getString(R.string.news_time) + TimeUtils.getDateToString(data.getTime()));
         holder.setTextView(R.id.tv_title, data.getTitle());
         holder.setTextView(R.id.tv_url, data.getFromurl());

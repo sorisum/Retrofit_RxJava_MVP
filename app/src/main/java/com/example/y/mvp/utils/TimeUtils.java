@@ -9,7 +9,6 @@ import java.util.Date;
 /**
  * by 12406 on 2016/5/15.
  */
-@SuppressWarnings("ALL")
 public class TimeUtils {
 
     private static SimpleDateFormat format;

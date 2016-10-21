@@ -7,10 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -22,7 +19,6 @@ import java.io.File;
 /**
  * by y on 2016/4/29.
  */
-@SuppressWarnings("ALL")
 public class ActivityUtils {
 
     public static void startActivity(Class<?> clz) {
@@ -74,34 +70,6 @@ public class ActivityUtils {
         inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    //检测键盘的状态
-    public static boolean syskeyBroadStatus() {
-        InputMethodManager imm = (InputMethodManager) UIUtils.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        return imm.isActive();
-    }
-
-    //屏幕高度
-    public static int getTop() {
-        WindowManager windowManager = UIUtils.getActivity().getWindowManager();
-        int width = windowManager.getDefaultDisplay().getWidth();
-        int height = windowManager.getDefaultDisplay().getHeight();
-        return height;
-    }
-
-    //toolbar高度
-    public static int getToolBarTop(Toolbar toolbar) {
-        return toolbar.getTop();
-    }
-
-
-    //状态栏高度
-    public static int getRectTop() {
-        Rect outRect = new Rect();
-        UIUtils.getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(outRect);
-        int i = outRect.top;
-        return i;
-    }
-
     //获取图库路径
     public static File ImagePath() {
         String sdcard = Environment.getExternalStorageDirectory().toString();
@@ -116,53 +84,6 @@ public class ActivityUtils {
         return mFile.getAbsoluteFile();
     }
 
-    //获取整个屏幕的截图
-    public static Bitmap captureContent(ViewGroup viewGroup) {
-        viewGroup.setDrawingCacheEnabled(false);
-        viewGroup.setDrawingCacheEnabled(true);
-        return viewGroup.getDrawingCache();
-    }
-
-    /**
-     * 获得屏幕高度
-     */
-    public static int getScreenWidth() {
-        WindowManager wm = (WindowManager) UIUtils.getContext().getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.widthPixels;
-    }
-
-    /**
-     * 获得屏幕宽度
-     */
-    public static int getScreenHeight() {
-        WindowManager wm = (WindowManager) UIUtils.getContext().getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.heightPixels;
-    }
-
-
-    /**
-     * 获取当前屏幕截图，包含状态栏
-     */
-    public static Bitmap snapShotWithStatusBar() {
-        View view = UIUtils.getActivity().getWindow().getDecorView();
-        view.setDrawingCacheEnabled(true);
-        view.buildDrawingCache();
-        Bitmap bmp = view.getDrawingCache();
-        Bitmap bp = null;
-        bp = Bitmap.createBitmap(bmp, 0, 0, getScreenWidth(), getScreenHeight());
-        view.destroyDrawingCache();
-        return bp;
-
-    }
-
-
-    /**
-     * 截图
-     */
     public static Bitmap captureContent(Activity activity) {
         //View是你需要截图的View
         View view = activity.getWindow().getDecorView();
@@ -182,23 +103,6 @@ public class ActivityUtils {
         return b;
     }
 
-
-    /**
-     * 获取当前屏幕截图，不包含状态栏
-     */
-    public static Bitmap snapShotWithoutStatusBar() {
-        View view = UIUtils.getActivity().getWindow().getDecorView();
-        view.setDrawingCacheEnabled(true);
-        view.buildDrawingCache();
-        Bitmap bmp = view.getDrawingCache();
-        Rect frame = new Rect();
-        UIUtils.getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-        int statusBarHeight = frame.top;
-        Bitmap bp = null;
-        bp = Bitmap.createBitmap(bmp, 0, statusBarHeight, getScreenWidth(), getScreenHeight() - statusBarHeight);
-        view.destroyDrawingCache();
-        return bp;
-    }
 
     public static void share(String message) {
         Intent intent = new Intent(Intent.ACTION_SEND);

@@ -1,8 +1,6 @@
 package com.example.y.mvp.network;
 
 
-import com.socks.library.KLog;
-
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -67,7 +65,7 @@ class Network {
             String content = response.body().string();
 //          KLog.i(chain.request().toString());
 //          KLog.i(String.format(Locale.getDefault(), "Received response for %s in %.1fms%n%s", response.request().url(), (System.nanoTime() - System.nanoTime()) / 1e6d, response.headers()));
-            KLog.json(content);
+//            KLog.json(content);
             if (response.body() != null) {
                 ResponseBody body = ResponseBody.create(mediaType, content);
                 return response.newBuilder().body(body).build();

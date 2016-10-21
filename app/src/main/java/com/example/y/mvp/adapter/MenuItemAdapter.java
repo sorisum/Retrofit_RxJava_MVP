@@ -33,8 +33,8 @@ public class MenuItemAdapter extends BaseRecyclerViewAdapter<String>
     @Override
     protected void getHeadLayoutId(View headView) {
         super.getHeadLayoutId(headView);
-        imageView = getView(headView, R.id.iv);
-        MImageView headImage = getView(headView, R.id.head_image);
+        imageView = (ImageView) headView.findViewById(R.id.iv);
+        MImageView headImage = (MImageView) headView.findViewById(R.id.head_image);
         if (SpfUtils.isTheme(Constant.DAY)) {
             getImageViewDay();
         } else {
@@ -55,15 +55,15 @@ public class MenuItemAdapter extends BaseRecyclerViewAdapter<String>
     }
 
     @Override
-    protected void onBind(ViewHolder holder, int position, String data) {
+    protected void onBind(BaseViewHolder holder, int position, String data) {
         holder.setTextView(R.id.tv_menu_item, data);
     }
 
-    public void getImageViewDay() {
+    private void getImageViewDay() {
         imageView.setBackgroundResource(R.drawable.day);
     }
 
-    public void getImageViewNight() {
+    private void getImageViewNight() {
         imageView.setBackgroundResource(R.drawable.night);
     }
 

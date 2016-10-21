@@ -3,7 +3,6 @@ package com.example.y.mvp.fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
@@ -30,7 +29,6 @@ public class ImageListFragment extends BaseFragment implements SwipeRefreshLayou
 
     private MRecyclerView recyclerView;
     private SwipeRefreshLayout srfLayout;
-    private boolean isLoad;
     private ImageListAdapter adapter;
     private Presenter.ImageListPresenter imageListPresenter;
 
@@ -40,12 +38,6 @@ public class ImageListFragment extends BaseFragment implements SwipeRefreshLayou
         bundle.putInt(FRAGMENT_INDEX, index);
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-
-    @Override
-    protected View initView(Bundle savedInstanceState) {
-        return View.inflate(UIUtils.getActivity(), R.layout.fragment_main, null);
     }
 
     @Override
@@ -61,27 +53,26 @@ public class ImageListFragment extends BaseFragment implements SwipeRefreshLayou
         }
 
         imageListPresenter = new ImageListPresenterImpl(this);
-
         LinkedList<ImageListInfo> list = new LinkedList<>();
-
         srfLayout.setOnRefreshListener(this);
-
         adapter = new ImageListAdapter(list);
         adapter.setOnItemClickListener(this);
-        adapter.setFootLayout(Constant.FOOT_LAYOUT);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLoadingData(this);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_GRIDVIEW, LinearLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_GRIDVIEW, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
-
-
         srfLayout.post(new Runnable() {
             @Override
             public void run() {
                 onRefresh();
             }
         });
+        setLoad();
+    }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_main;
     }
 
 
@@ -118,16 +109,12 @@ public class ImageListFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     public void showProgress() {
-        if (!srfLayout.isRefreshing()) {
-            srfLayout.setRefreshing(true);
-        }
+        srfLayout.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        if (srfLayout.isRefreshing()) {
-            srfLayout.setRefreshing(false);
-        }
+        srfLayout.setRefreshing(false);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class JokeTextAdapter extends BaseRecyclerViewAdapter<JokeTextInfo> {
     }
 
     @Override
-    protected void onBind(ViewHolder holder, int position, JokeTextInfo data) {
+    protected void onBind(BaseViewHolder holder, int position, JokeTextInfo data) {
         holder.setTextView(R.id.tv_time, UIUtils.getString(R.string.news_time) + data.getCt());
         holder.setTextView(R.id.tv_text, Html.fromHtml(data.getText()));
         JokeTextDbUtils.insert(data.getId(), data.getText(), data.getCt());

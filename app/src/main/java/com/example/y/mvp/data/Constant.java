@@ -25,9 +25,6 @@ public class Constant {
     public static final int DAY_STYLES = R.style.AppTheme_Day;
     public static final int NIGHT_STYLES = R.style.AppTheme_Night;
 
-    //recyclerview foot
-    public static final int FOOT_LAYOUT = R.layout.item_foot;
-
     //recyclerview head
     public static final int HEAD_LAYOUT = R.layout.recyclerview_header;
 

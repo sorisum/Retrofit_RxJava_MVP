@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.example.y.mvp.data.Constant;
 import com.example.y.mvp.utils.AppUtils;
-import com.example.y.mvp.utils.RxUtil;
 import com.example.y.mvp.utils.SpfUtils;
 import com.example.y.mvp.utils.swipeback.SwipeBackActivity;
 import com.example.y.mvp.utils.swipeback.SwipeBackLayout;
@@ -58,10 +57,4 @@ public abstract class BaseActivity extends SwipeBackActivity {
     protected abstract void initById();
 
     protected abstract int getLayoutId();
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxUtil.unsubscribe();
-    }
 }

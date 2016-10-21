@@ -24,7 +24,7 @@ public class JokePicAdapter extends BaseRecyclerViewAdapter<JokePicInfo> {
     }
 
     @Override
-    protected void onBind(ViewHolder holder, int position, JokePicInfo data) {
+    protected void onBind(BaseViewHolder holder, int position, JokePicInfo data) {
         ImageLoaderUtils.display(UIUtils.getContext(), holder.getImageView(R.id.image), data.getImg());
         holder.setTextView(R.id.tv_time, data.getTitle());
     }

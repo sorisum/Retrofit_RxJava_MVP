@@ -1,10 +1,8 @@
 package com.example.y.mvp.fragment;
 
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import com.example.y.mvp.NewsTabNameInfo;
 import com.example.y.mvp.R;
@@ -30,11 +28,6 @@ public class NewsViewPagerFragment extends BaseFragment implements BaseView.TabN
     private TabNewsAdapter tabNewsAdapter;
 
     @Override
-    protected View initView(Bundle savedInstanceState) {
-        return View.inflate(UIUtils.getActivity(), R.layout.fragment_viewpager, null);
-    }
-
-    @Override
     protected void initById() {
         tabLayout = getView(R.id.tab_layout);
         viewPager = getView(R.id.viewPager);
@@ -44,10 +37,14 @@ public class NewsViewPagerFragment extends BaseFragment implements BaseView.TabN
     protected void initData() {
         data = new LinkedList<>();
         tabNewsAdapter = new TabNewsAdapter(getChildFragmentManager(), data);
-
         Presenter.TabNewsPresenter tabNewsPresenter = new TabNewsPresenterImpl(this);
         tabNewsPresenter.requestNetWork();
 
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_viewpager;
     }
 
     @Override

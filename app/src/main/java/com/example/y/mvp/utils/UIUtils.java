@@ -11,7 +11,6 @@ import com.example.y.mvp.activity.BaseActivity;
 /**
  * by y on 2016/4/28.
  */
-@SuppressWarnings("ALL")
 public class UIUtils {
 
 

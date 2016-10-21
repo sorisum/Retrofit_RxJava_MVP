@@ -1,6 +1,5 @@
 package com.example.y.mvp.fragment;
 
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -12,8 +11,8 @@ import com.example.y.mvp.R;
 import com.example.y.mvp.adapter.BaseRecyclerViewAdapter;
 import com.example.y.mvp.adapter.JokeTextAdapter;
 import com.example.y.mvp.data.Constant;
-import com.example.y.mvp.mvp.presenter.Presenter;
 import com.example.y.mvp.mvp.presenter.JokeTextPresenterImpl;
+import com.example.y.mvp.mvp.presenter.Presenter;
 import com.example.y.mvp.mvp.view.BaseView;
 import com.example.y.mvp.utils.ActivityUtils;
 import com.example.y.mvp.utils.UIUtils;
@@ -33,12 +32,6 @@ public class JokeTextFragment extends BaseFragment implements SwipeRefreshLayout
 
     private Presenter.JokeTextPresenter jokePresenter;
     private JokeTextAdapter adapter;
-
-
-    @Override
-    protected View initView(Bundle savedInstanceState) {
-        return View.inflate(UIUtils.getActivity(), R.layout.fragment_joke_text, null);
-    }
 
     @Override
     protected void initById() {
@@ -60,7 +53,6 @@ public class JokeTextFragment extends BaseFragment implements SwipeRefreshLayout
 
         adapter = new JokeTextAdapter(jokeTextInfo);
         adapter.setOnLongClickListener(this);
-        adapter.setFootLayout(Constant.FOOT_LAYOUT);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLoadingData(this);
@@ -75,6 +67,11 @@ public class JokeTextFragment extends BaseFragment implements SwipeRefreshLayout
         });
 
         setLoad();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_joke_text;
     }
 
     @Override
@@ -108,16 +105,12 @@ public class JokeTextFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     public void showProgress() {
-        if (!srfLayout.isRefreshing()) {
-            srfLayout.setRefreshing(true);
-        }
+        srfLayout.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        if (srfLayout.isRefreshing()) {
-            srfLayout.setRefreshing(false);
-        }
+        srfLayout.setRefreshing(false);
     }
 
     @Override

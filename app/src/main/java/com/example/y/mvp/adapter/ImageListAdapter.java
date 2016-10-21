@@ -24,12 +24,11 @@ public class ImageListAdapter extends BaseRecyclerViewAdapter<ImageListInfo> {
         return R.layout.image_list_item;
     }
 
-
     @Override
-    protected void onBind(ViewHolder holder, int position, ImageListInfo data) {
-        holder.setTextView(R.id.tv_title,data.getTitle());
+    protected void onBind(BaseViewHolder holder, int position, ImageListInfo data) {
+        holder.setTextView(R.id.tv_title, data.getTitle());
         holder.setTextView(R.id.tv_count, UIUtils.getString(R.string.list_adapter_views) + data.getCount());
-        holder.setTextView(R.id.tv_size,data.getSize() + UIUtils.getString(R.string.list_adapter_number));
+        holder.setTextView(R.id.tv_size, data.getSize() + UIUtils.getString(R.string.list_adapter_number));
         ImageLoaderUtils.display(UIUtils.getContext(), holder.getImageView(R.id.image), Api.IMAGER_URL + data.getImg());
     }
 

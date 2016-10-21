@@ -3,9 +3,9 @@ package com.example.y.mvp.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -34,7 +34,7 @@ import java.util.List;
 
 public class MainActivity extends DarkViewActivity
         implements BaseView.MainView,
-        BaseRecyclerViewAdapter.OnItemClickListener<String>, MRecyclerView.LoadingData {
+        BaseRecyclerViewAdapter.OnItemClickListener<String> {
 
 
     private Toolbar toolBar;
@@ -79,8 +79,7 @@ public class MainActivity extends DarkViewActivity
         adapter.setHead(true);
         adapter.setHeadLayout(Constant.HEAD_LAYOUT);
         recyclerViewMenu.setHasFixedSize(true);
-        recyclerViewMenu.setLoadingData(this);
-        recyclerViewMenu.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LINEAR, LinearLayoutManager.VERTICAL));
+        recyclerViewMenu.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LINEAR, StaggeredGridLayoutManager.VERTICAL));
         recyclerViewMenu.setAdapter(adapter);
     }
 
@@ -114,27 +113,28 @@ public class MainActivity extends DarkViewActivity
 
     @Override
     public void switchNews() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new NewsViewPagerFragment()).commit();
+        getFragment(new NewsViewPagerFragment());
     }
+
 
     @Override
     public void switchImageClassification() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new ImageViewPagerFragment()).commit();
+        getFragment(new ImageViewPagerFragment());
     }
 
     @Override
     public void switchNewImage() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new ImageNewFragment()).commit();
+        getFragment(new ImageNewFragment());
     }
 
     @Override
     public void switchJoke() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new JokeMainPagerFragment()).commit();
+        getFragment(new JokeMainPagerFragment());
     }
 
     @Override
     public void switchAbout() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new AboutFragment()).commit();
+        getFragment(new AboutFragment());
     }
 
     @Override
@@ -144,8 +144,7 @@ public class MainActivity extends DarkViewActivity
         drawerLayout.closeDrawers();
     }
 
-    @Override
-    public void onLoadMore() {
+    private int getFragment(Fragment fragment) {
+        return getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
     }
-
 }

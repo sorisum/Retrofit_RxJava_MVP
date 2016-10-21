@@ -57,7 +57,9 @@ public class MRecyclerView extends RecyclerView {
 
         RecyclerView.LayoutManager layoutManager = getLayoutManager();
         if (layoutManagerType == null) {
-            if (layoutManager instanceof LinearLayoutManager) {
+            if (layoutManager instanceof GridLayoutManager) {
+                layoutManagerType = LAYOUT_MANAGER_TYPE.GRID;
+            } else if (layoutManager instanceof LinearLayoutManager) {
                 layoutManagerType = LAYOUT_MANAGER_TYPE.LINEAR;
             } else if (layoutManager instanceof StaggeredGridLayoutManager) {
                 layoutManagerType = LAYOUT_MANAGER_TYPE.STAGGERED_GRID;
@@ -92,7 +94,7 @@ public class MRecyclerView extends RecyclerView {
         RecyclerView.LayoutManager layoutManager = getLayoutManager();
         int visibleItemCount = layoutManager.getChildCount();
         int totalItemCount = layoutManager.getItemCount();
-        if (visibleItemCount > 0 && state == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition == totalItemCount - 1) {
+        if (null != loadingData && visibleItemCount > 0 && state == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition == totalItemCount - 1) {
             loadingData.onLoadMore();
         }
     }

@@ -14,7 +14,6 @@ import com.example.y.mvp.R;
 /**
  * by y on 2016/4/29.
  */
-@SuppressWarnings("ALL")
 public class ImageLoaderUtils {
 
     public static void display(Context context, ImageView imageView, String url, int placeholder, int error) {

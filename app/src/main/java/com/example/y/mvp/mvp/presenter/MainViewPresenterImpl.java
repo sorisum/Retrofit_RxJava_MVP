@@ -16,7 +16,6 @@ public class MainViewPresenterImpl extends BasePresenterImpl<BaseView.MainView>
 
     @Override
     public void switchPosition(int position) {
-
         switch (position) {
             case 0:
                 view.switchNews();

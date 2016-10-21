@@ -42,10 +42,6 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
         return fragment;
     }
 
-    @Override
-    protected View initView(Bundle savedInstanceState) {
-        return View.inflate(UIUtils.getActivity(), R.layout.fragment_news, null);
-    }
 
     @Override
     protected void initById() {
@@ -64,11 +60,10 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
         LinkedList<NewsListInfo> list = new LinkedList<>();
         adapter = new NewsListAdapter(list, index + 1);
         adapter.setOnItemClickListener(this);
-        adapter.setFootLayout(Constant.FOOT_LAYOUT);
         srfLayout.setOnRefreshListener(this);
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLoadingData(this);
+        adapter.setFoot(false);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LINEAR, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
 
@@ -80,6 +75,11 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
         });
 
         setLoad();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_news;
     }
 
 
@@ -115,16 +115,12 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     public void showProgress() {
-        if (!srfLayout.isRefreshing()) {
-            srfLayout.setRefreshing(true);
-        }
+        srfLayout.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        if (srfLayout.isRefreshing()) {
-            srfLayout.setRefreshing(false);
-        }
+        srfLayout.setRefreshing(false);
     }
 
     @Override

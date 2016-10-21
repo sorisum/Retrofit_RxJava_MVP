@@ -33,7 +33,6 @@ public class AppUtils extends Application {
     }
 
     private static class AppUtilsHolder {
-
         public static final AppUtils APP_UTILS = new AppUtils();
     }
 
@@ -49,7 +48,7 @@ public class AppUtils extends Application {
         for (Activity activity : activityList) {
             activity.finish();
         }
-        System.exit(0);
+        RxUtil.unsubscribe();
     }
 
     public void refreshAllActivity() {

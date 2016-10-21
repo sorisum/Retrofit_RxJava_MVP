@@ -1,11 +1,9 @@
 package com.example.y.mvp.fragment;
 
 
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.View;
 
 import com.example.y.mvp.JokePicInfo;
 import com.example.y.mvp.R;
@@ -34,12 +32,6 @@ public class JokePicFragment extends BaseFragment
     private Presenter.JokePicPresenter jokePresenter;
     private JokePicAdapter adapter;
 
-
-    @Override
-    protected View initView(Bundle savedInstanceState) {
-        return View.inflate(UIUtils.getActivity(), R.layout.fragment_joke_pic, null);
-    }
-
     @Override
     protected void initById() {
         recyclerView = getView(R.id.recyclerView);
@@ -59,7 +51,6 @@ public class JokePicFragment extends BaseFragment
         srfLayout.setOnRefreshListener(this);
 
         adapter = new JokePicAdapter(jokePicInfos);
-        adapter.setFootLayout(Constant.FOOT_LAYOUT);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLoadingData(this);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LINEAR, LinearLayoutManager.VERTICAL));
@@ -73,6 +64,11 @@ public class JokePicFragment extends BaseFragment
         });
 
         setLoad();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_joke_pic;
     }
 
     @Override
@@ -106,16 +102,12 @@ public class JokePicFragment extends BaseFragment
 
     @Override
     public void showProgress() {
-        if (!srfLayout.isRefreshing()) {
-            srfLayout.setRefreshing(true);
-        }
+        srfLayout.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        if (srfLayout.isRefreshing()) {
-            srfLayout.setRefreshing(false);
-        }
+        srfLayout.setRefreshing(false);
     }
 
     @Override
