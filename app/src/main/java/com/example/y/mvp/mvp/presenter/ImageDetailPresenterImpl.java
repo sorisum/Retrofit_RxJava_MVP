@@ -8,14 +8,13 @@ import com.example.y.mvp.R;
 import com.example.y.mvp.data.Constant;
 import com.example.y.mvp.mvp.model.BaseBean;
 import com.example.y.mvp.mvp.view.BaseView;
-import com.example.y.mvp.network.MySubscriber;
 import com.example.y.mvp.network.NetWorkRequest;
 import com.example.y.mvp.utils.UIUtils;
 
 /**
  * by y on 2016/4/29.
  */
-public class ImageDetailPresenterImpl extends BasePresenterImpl<BaseView.ImageDetailView>
+public class ImageDetailPresenterImpl extends BasePresenterImpl<BaseView.ImageDetailView, BaseBean.ImageDetailBean>
         implements Presenter.ImageDetailPresenter {
 
 
@@ -24,22 +23,33 @@ public class ImageDetailPresenterImpl extends BasePresenterImpl<BaseView.ImageDe
     }
 
     @Override
+    protected void showProgress() {
+    }
+
+    @Override
+    protected void netWorkNext(BaseBean.ImageDetailBean imageDetailBean) {
+        view.setData(imageDetailBean.getList());
+    }
+
+    @Override
+    protected void hideProgress() {
+
+    }
+
+    @Override
+    protected void netWorkError() {
+        view.netWorkError();
+    }
+
+    @Override
     public void requestNetWork(int id) {
-        NetWorkRequest.imageDetail(id, new MySubscriber<BaseBean.ImageDetailBean>() {
-            @Override
-            public void onNext(BaseBean.ImageDetailBean imageDetailBean) {
-                super.onNext(imageDetailBean);
-                //noinspection unchecked
-                view.setData(imageDetailBean.getList());
-            }
-        });
+        NetWorkRequest.imageDetail(id, getSubscriber());
     }
 
 
     @Override
     public void competence(int requestCode, int[] grantResults) {
         if (requestCode == Constant.WRITE_EXTERNAL_STORAGE_REQUEST_CODE) {
-            //noinspection StatementWithEmptyBody
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             } else {
                 Toast.makeText(UIUtils.getContext(), UIUtils.getString(R.string.competence_error), Toast.LENGTH_LONG).show();
@@ -52,8 +62,4 @@ public class ImageDetailPresenterImpl extends BasePresenterImpl<BaseView.ImageDe
         return UIUtils.getActivity().getIntent().getExtras().getInt("id");
     }
 
-    @Override
-    protected void onNetWorkError() {
-        view.netWorkError();
-    }
 }

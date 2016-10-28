@@ -3,13 +3,12 @@ package com.example.y.mvp.mvp.presenter;
 
 import com.example.y.mvp.mvp.model.BaseBean;
 import com.example.y.mvp.mvp.view.BaseView;
-import com.example.y.mvp.network.MySubscriber;
 import com.example.y.mvp.network.NetWorkRequest;
 
 /**
  * by 12406 on 2016/5/14.
  */
-public class TabNewsPresenterImpl extends BasePresenterImpl<BaseView.TabNewsView>
+public class TabNewsPresenterImpl extends BasePresenterImpl<BaseView.TabNewsView, BaseBean.TabNewsBean>
         implements Presenter.TabNewsPresenter {
 
 
@@ -18,20 +17,28 @@ public class TabNewsPresenterImpl extends BasePresenterImpl<BaseView.TabNewsView
     }
 
     @Override
-    public void requestNetWork() {
-        NetWorkRequest.tabNews(new MySubscriber<BaseBean.TabNewsBean>() {
-            @Override
-            public void onNext(BaseBean.TabNewsBean tabNewsBean) {
-                super.onNext(tabNewsBean);
-                //noinspection unchecked
-                view.setData(tabNewsBean.getTngou());
-            }
-        });
+    protected void showProgress() {
+
     }
 
     @Override
-    protected void onNetWorkError() {
+    protected void netWorkNext(BaseBean.TabNewsBean tabNewsBean) {
+        view.setData(tabNewsBean.getTngou());
+    }
+
+    @Override
+    protected void hideProgress() {
+
+    }
+
+    @Override
+    protected void netWorkError() {
         view.netWorkError();
+    }
+
+    @Override
+    public void requestNetWork() {
+        NetWorkRequest.tabNews(getSubscriber());
     }
 
 }

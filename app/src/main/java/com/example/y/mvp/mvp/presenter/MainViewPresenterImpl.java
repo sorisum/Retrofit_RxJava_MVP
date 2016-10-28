@@ -6,37 +6,35 @@ import com.example.y.mvp.mvp.view.BaseView;
 /**
  * by 12406 on 2016/5/1.
  */
-public class MainViewPresenterImpl extends BasePresenterImpl<BaseView.MainView>
+public class MainViewPresenterImpl
         implements Presenter.MainViewPresenter {
+
+    private BaseView.MainView mainView;
 
 
     public MainViewPresenterImpl(BaseView.MainView view) {
-        super(view);
+        this.mainView = view;
     }
 
     @Override
     public void switchPosition(int position) {
         switch (position) {
             case 0:
-                view.switchNews();
+                mainView.switchNews();
                 break;
             case 1:
-                view.switchImageClassification();
+                mainView.switchImageClassification();
                 break;
             case 2:
-                view.switchNewImage();
+                mainView.switchNewImage();
                 break;
             case 3:
-                view.switchJoke();
+                mainView.switchJoke();
                 break;
             case 4:
-                view.switchAbout();
+                mainView.switchAbout();
                 break;
         }
-    }
-
-    @Override
-    protected void onNetWorkError() {
     }
 
 }

@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.y.mvp.R;
-import com.example.y.mvp.network.MySubscriber;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,7 +36,7 @@ public class SaveImageUtils {
                         }
                 ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new MySubscriber<ImageView>() {
+                .subscribe(new Subscriber<ImageView>() {
                     @Override
                     public void onNext(ImageView imageView) {
                         File imageFile = new File(ActivityUtils.ImagePath(), id + ".jpg");
@@ -53,6 +52,11 @@ public class SaveImageUtils {
                             e.printStackTrace();
                             onError(e);
                         }
+                    }
+
+                    @Override
+                    public void onCompleted() {
+
                     }
 
                     @Override

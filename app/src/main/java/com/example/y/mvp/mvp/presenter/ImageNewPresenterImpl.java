@@ -9,7 +9,6 @@ import com.example.y.mvp.activity.ImageDetailActivity;
 import com.example.y.mvp.mvp.model.BaseBean;
 import com.example.y.mvp.mvp.model.ImageNewInfo;
 import com.example.y.mvp.mvp.view.BaseView;
-import com.example.y.mvp.network.MySubscriber;
 import com.example.y.mvp.network.NetWorkRequest;
 import com.example.y.mvp.utils.ActivityUtils;
 import com.example.y.mvp.utils.UIUtils;
@@ -17,12 +16,32 @@ import com.example.y.mvp.utils.UIUtils;
 /**
  * by y on 2016/4/29.
  */
-public class ImageNewPresenterImpl extends BasePresenterImpl<BaseView.ImageNewView>
+public class ImageNewPresenterImpl extends BasePresenterImpl<BaseView.ImageNewView, BaseBean.ImageNewBean>
         implements Presenter.ImageNewPresenter {
 
 
     public ImageNewPresenterImpl(BaseView.ImageNewView view) {
         super(view);
+    }
+
+    @Override
+    protected void showProgress() {
+        view.showProgress();
+    }
+
+    @Override
+    protected void netWorkNext(BaseBean.ImageNewBean imageNewBean) {
+        view.setData(imageNewBean.getTngou());
+    }
+
+    @Override
+    protected void hideProgress() {
+        view.hideProgress();
+    }
+
+    @Override
+    protected void netWorkError() {
+        view.netWorkError();
     }
 
     @Override
@@ -35,36 +54,12 @@ public class ImageNewPresenterImpl extends BasePresenterImpl<BaseView.ImageNewVi
                 rows = "20";
             }
             ActivityUtils.closeSyskeyBroad();
-            NetWorkRequest.imageNew(Integer.valueOf(id), Integer.valueOf(rows), new MySubscriber<BaseBean.ImageNewBean>() {
-                @Override
-                public void onNext(BaseBean.ImageNewBean imageNewBean) {
-                    super.onNext(imageNewBean);
-                    //noinspection unchecked
-                    view.setData(imageNewBean.getTngou());
-                }
-            });
+            NetWorkRequest.imageNew(Integer.valueOf(id), Integer.valueOf(rows), getSubscriber());
         }
     }
 
     @Override
     public void onClick(ImageNewInfo info) {
         ImageDetailActivity.startIntent(info.getId(), info.getTitle());
-    }
-
-    @Override
-    protected void onNetWorkStart() {
-        view.showProgress();
-    }
-
-    @Override
-    protected void onNetWorkCompleted() {
-        view.hideProgress();
-    }
-
-
-    @Override
-    protected void onNetWorkError() {
-        view.hideProgress();
-        view.netWorkError();
     }
 }

@@ -3,13 +3,12 @@ package com.example.y.mvp.mvp.presenter;
 
 import com.example.y.mvp.NewsDetailInfo;
 import com.example.y.mvp.mvp.view.BaseView;
-import com.example.y.mvp.network.MySubscriber;
 import com.example.y.mvp.network.NetWorkRequest;
 
 /**
  * by 12406 on 2016/5/30.
  */
-public class NewsDetailPresenterImpl extends BasePresenterImpl<BaseView.NewsDetailView>
+public class NewsDetailPresenterImpl extends BasePresenterImpl<BaseView.NewsDetailView, NewsDetailInfo>
         implements Presenter.NewsDetailPresenter {
 
 
@@ -17,32 +16,30 @@ public class NewsDetailPresenterImpl extends BasePresenterImpl<BaseView.NewsDeta
         super(view);
     }
 
-
     @Override
-    public void requestNetWork(int id) {
-        NetWorkRequest.newsDetail(id, new MySubscriber<NewsDetailInfo>() {
-            @Override
-            public void onNext(NewsDetailInfo newsDetailInfo) {
-                super.onNext(newsDetailInfo);
-                view.setData(newsDetailInfo);
-            }
-        });
-    }
-
-    @Override
-    protected void onNetWorkStart() {
+    protected void showProgress() {
         view.showProgress();
     }
 
     @Override
-    protected void onNetWorkCompleted() {
+    protected void netWorkNext(NewsDetailInfo newsDetailInfo) {
+        view.setData(newsDetailInfo);
+    }
+
+    @Override
+    protected void hideProgress() {
         view.hideProgress();
+    }
+
+    @Override
+    protected void netWorkError() {
+        view.netWorkError();
     }
 
 
     @Override
-    protected void onNetWorkError() {
-        view.hideProgress();
-        view.netWorkError();
+    public void requestNetWork(int id) {
+        NetWorkRequest.newsDetail(id, getSubscriber());
     }
+
 }

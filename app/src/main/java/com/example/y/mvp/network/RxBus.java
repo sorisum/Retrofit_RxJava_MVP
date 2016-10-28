@@ -27,20 +27,11 @@ public class RxBus {
     }
 
     public void sendNetWork(Object object) {
-        //noinspection unchecked
         rxBus.onNext(object);
     }
 
     public <T> Observable<T> toObserverable(final Class<T> eventType) {
-        //noinspection unchecked
         return rxBus.ofType(eventType);
-//        return rxBus.filter(new Func1<Object, Boolean>() {
-//            @Override
-//            public Boolean call(Object object) {
-//                return eventType.isInstance(object);
-//            }
-//        }).cast(eventType);
-
     }
 
 }

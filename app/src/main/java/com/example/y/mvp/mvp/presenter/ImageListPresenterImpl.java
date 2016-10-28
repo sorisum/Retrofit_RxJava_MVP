@@ -5,18 +5,38 @@ import com.example.y.mvp.ImageListInfo;
 import com.example.y.mvp.activity.ImageDetailActivity;
 import com.example.y.mvp.mvp.model.BaseBean;
 import com.example.y.mvp.mvp.view.BaseView;
-import com.example.y.mvp.network.MySubscriber;
 import com.example.y.mvp.network.NetWorkRequest;
 
 /**
  * by y on 2016/4/29.
  */
-public class ImageListPresenterImpl extends BasePresenterImpl<BaseView.ImageListView>
+public class ImageListPresenterImpl extends BasePresenterImpl<BaseView.ImageListView,BaseBean.ImageListBean>
         implements Presenter.ImageListPresenter {
 
 
     public ImageListPresenterImpl(BaseView.ImageListView view) {
         super(view);
+    }
+
+    @Override
+    protected void showProgress() {
+
+    }
+
+    @Override
+    protected void netWorkNext(BaseBean.ImageListBean imageListBean) {
+        view.setData(imageListBean.getTngou());
+    }
+
+    @Override
+    protected void hideProgress() {
+        view.hideFoot();
+        view.hideProgress();
+    }
+
+    @Override
+    protected void netWorkError() {
+        view.netWorkError();
     }
 
     @Override
@@ -28,14 +48,7 @@ public class ImageListPresenterImpl extends BasePresenterImpl<BaseView.ImageList
                 view.showFoot();
             }
         }
-        NetWorkRequest.imageList(id, page, new MySubscriber<BaseBean.ImageListBean>() {
-            @Override
-            public void onNext(BaseBean.ImageListBean imageListBean) {
-                super.onNext(imageListBean);
-                //noinspection unchecked
-                view.setData(imageListBean.getTngou());
-            }
-        });
+        NetWorkRequest.imageList(id, page, getSubscriber());
     }
 
     @Override
@@ -43,17 +56,4 @@ public class ImageListPresenterImpl extends BasePresenterImpl<BaseView.ImageList
         ImageDetailActivity.startIntent(info.getId(), info.getTitle());
     }
 
-    @Override
-    protected void onNetWorkCompleted() {
-        super.onNetWorkCompleted();
-        view.hideFoot();
-        view.hideProgress();
-    }
-
-    @Override
-    protected void onNetWorkError() {
-        view.hideFoot();
-        view.hideProgress();
-        view.netWorkError();
-    }
 }
