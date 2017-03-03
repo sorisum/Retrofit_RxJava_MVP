@@ -125,6 +125,6 @@ public class JokeTextFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     public void onLongClick(View view, int position, JokeTextInfo info) {
-        ActivityUtils.share(String.valueOf(Html.fromHtml(info.getText())));
+        ActivityUtils.share(getActivity(), String.valueOf(Html.fromHtml(info.getText())));
     }
 }

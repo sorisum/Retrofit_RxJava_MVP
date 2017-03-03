@@ -111,7 +111,7 @@ public class NewsDetailActivity extends DarkViewActivity
 
     @Override
     public void switchShare() {
-        ActivityUtils.share(message);
+        ActivityUtils.share(this, message);
     }
 
     @Override

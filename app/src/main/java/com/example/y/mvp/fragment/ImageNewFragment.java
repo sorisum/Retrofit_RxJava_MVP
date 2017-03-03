@@ -131,4 +131,9 @@ public class ImageNewFragment extends BaseFragment implements
                 break;
         }
     }
+
+    @Override
+    public void offClose() {
+        ActivityUtils.closeSyskeyBroad(getActivity());
+    }
 }

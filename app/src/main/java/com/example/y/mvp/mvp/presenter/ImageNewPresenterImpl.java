@@ -53,7 +53,7 @@ public class ImageNewPresenterImpl extends BasePresenterImpl<BaseView.ImageNewVi
             if (TextUtils.isEmpty(rows)) {
                 rows = "20";
             }
-            ActivityUtils.closeSyskeyBroad();
+            view.offClose();
             NetWorkRequest.imageNew(Integer.valueOf(id), Integer.valueOf(rows), getSubscriber());
         }
     }

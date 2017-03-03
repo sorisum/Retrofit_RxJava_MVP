@@ -50,7 +50,7 @@ public class ImageDetailActivity extends DarkViewActivity
     @Override
     protected void initCreate(Bundle savedInstanceState) {
         setSupportActionBar(toolBar);
-        CompetenceUtils.Storage();
+        CompetenceUtils.storage(this);
         init();
     }
 
@@ -72,7 +72,7 @@ public class ImageDetailActivity extends DarkViewActivity
         imageDetailPresenter = new ImageDetailPresenterImpl(this);
         toolBarItemPresenter = new ToolBarItemPresenterImpl(this);
         list = new LinkedList<>();
-        imageDetailPresenter.requestNetWork(imageDetailPresenter.getBundle());
+        imageDetailPresenter.requestNetWork(getIntent().getExtras().getInt("id"));
         bigImageAdapter = new ImageDetailAdapter(list);
         toolBar.setOnMenuItemClickListener(this);
         viewPager.addOnPageChangeListener(this);
@@ -107,7 +107,7 @@ public class ImageDetailActivity extends DarkViewActivity
 
     @Override
     public void switchShare() {
-        ActivityUtils.share(Api.IMAGER_URL + list.get(pos).getSrc());
+        ActivityUtils.share(this, Api.IMAGER_URL + list.get(pos).getSrc());
     }
 
     @Override

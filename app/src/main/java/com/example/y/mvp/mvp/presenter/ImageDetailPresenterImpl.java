@@ -57,9 +57,4 @@ public class ImageDetailPresenterImpl extends BasePresenterImpl<BaseView.ImageDe
         }
     }
 
-    @Override
-    public int getBundle() {
-        return UIUtils.getActivity().getIntent().getExtras().getInt("id");
-    }
-
 }

@@ -37,26 +37,26 @@ public class ActivityUtils {
 
 
     //隐藏状态栏
-    public static void hideStatusBar() {
-        WindowManager.LayoutParams attrs = UIUtils.getActivity().getWindow().getAttributes();
+    public static void hideStatusBar(Activity activity) {
+        WindowManager.LayoutParams attrs = activity.getWindow().getAttributes();
         attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        UIUtils.getActivity().getWindow().setAttributes(attrs);
+        activity.getWindow().setAttributes(attrs);
     }
 
     //显示状态栏
-    public static void showStatusBar() {
-        WindowManager.LayoutParams attrs = UIUtils.getActivity().getWindow().getAttributes();
+    public static void showStatusBar(Activity activity) {
+        WindowManager.LayoutParams attrs = activity.getWindow().getAttributes();
         attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        UIUtils.getActivity().getWindow().setAttributes(attrs);
+        activity.getWindow().setAttributes(attrs);
     }
 
-    private void initWindow() {
+    private void initWindow(Activity activity) {
         //默认全屏显示
-        UIUtils.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         //不全屏显示
-        UIUtils.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         //全屏显示
-        UIUtils.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
     }
 
     public static void Toast(Object object) {
@@ -65,8 +65,8 @@ public class ActivityUtils {
 
 
     // 收起软键盘
-    public static void closeSyskeyBroad() {
-        InputMethodManager inputMethodManager = (InputMethodManager) UIUtils.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+    public static void closeSyskeyBroad(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
@@ -104,12 +104,12 @@ public class ActivityUtils {
     }
 
 
-    public static void share(String message) {
+    public static void share(Activity activity, String message) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, message);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        UIUtils.getActivity().startActivity(Intent.createChooser(intent, UIUtils.getString(R.string.share)));
+        activity.startActivity(Intent.createChooser(intent, UIUtils.getString(R.string.share)));
     }
 
 

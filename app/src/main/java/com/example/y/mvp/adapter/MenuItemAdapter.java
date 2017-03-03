@@ -31,7 +31,7 @@ public class MenuItemAdapter extends BaseRecyclerViewAdapter<String>
     }
 
     @Override
-    protected void getHeadLayoutId(View headView) {
+    protected void getHeadLayoutId(final View headView) {
         super.getHeadLayoutId(headView);
         imageView = (ImageView) headView.findViewById(R.id.iv);
         MImageView headImage = (MImageView) headView.findViewById(R.id.head_image);
@@ -44,7 +44,7 @@ public class MenuItemAdapter extends BaseRecyclerViewAdapter<String>
         headImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DiaLogUtils.clearSql();
+                DiaLogUtils.clearSql((Activity) headView.getContext());
             }
         });
     }

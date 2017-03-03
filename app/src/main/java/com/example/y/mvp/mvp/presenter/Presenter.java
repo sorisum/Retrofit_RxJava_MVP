@@ -16,8 +16,6 @@ public interface Presenter {
         void requestNetWork(int id);
 
         void competence(int requestCode, int[] grantResults);
-
-        int getBundle();
     }
 
     interface ImageListPresenter {

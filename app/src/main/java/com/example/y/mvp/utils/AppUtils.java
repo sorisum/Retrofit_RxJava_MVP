@@ -32,12 +32,9 @@ public class AppUtils extends Application {
         KLog.init(BuildConfig.LOG_DEBUG, Constant.K_LOG);
     }
 
-    private static class AppUtilsHolder {
-        public static final AppUtils APP_UTILS = new AppUtils();
-    }
 
     public static AppUtils getInstance() {
-        return AppUtilsHolder.APP_UTILS;
+        return (AppUtils) context;
     }
 
     public void addActivity(Activity activity) {

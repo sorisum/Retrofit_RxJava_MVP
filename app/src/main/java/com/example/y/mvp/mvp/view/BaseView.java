@@ -41,6 +41,7 @@ public interface BaseView<T> {
     }
 
     interface ImageNewView extends BaseView<ImageNewInfo> {
+        void offClose();
     }
 
     interface NewsListView extends BaseView<NewsListInfo> {
